@@ -326,7 +326,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __webpack_require__(10);
-const xml2js_1 = __webpack_require__(23);
+const xml2js = __webpack_require__(23);
 const get = __webpack_require__(15);
 const find = __webpack_require__(13);
 const map = __webpack_require__(4);
@@ -334,7 +334,7 @@ const union = __webpack_require__(19);
 const node_zip_1 = __webpack_require__(20);
 const parseLink_1 = __webpack_require__(0);
 const parseSection_1 = __webpack_require__(8);
-const xmlParser = new xml2js_1.default.Parser();
+const xmlParser = new xml2js.Parser();
 const xmlToJs = xml => {
     return new Promise((resolve, reject) => {
         xmlParser.parseString(xml, (err, object) => {

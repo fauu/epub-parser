@@ -74,10 +74,6 @@
     "expect.js": "^0.3.1",
     "express": "^4.15.3",
     "jest": "^20.0.4",
-<<<<<<< HEAD
-=======
-    "lodash-webpack-plugin": "^0.10.3",
->>>>>>> parent of af42ba0... Add lodash to devdeps
     "mocha": "^3.4.2",
     "promise": "^7.1.1",
     "rimraf": "^2.5.1",
