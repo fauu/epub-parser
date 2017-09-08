@@ -38,7 +38,6 @@
     "lodash": "^4.17.2",
     "node-zip": "^1.1.1",
     "to-markdown": "^3.0.3",
-    "typescript": "2.3.4",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
@@ -82,6 +81,7 @@
     "ts-loader": "^2.3.0",
     "ts-node": "^3.0.4",
     "tslint": "4.5.1",
+    "typescript": "2.3.4",
     "vrsource-tslint-rules": "^5.1.0",
     "webpack": "^2.6.0",
     "webpack-node-externals": "^1.6.0"
