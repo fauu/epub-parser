@@ -6,11 +6,11 @@
   "types": "build/types/index.d.ts",
   "scripts": {
     "build:types":
-      "tsc --outDir build/js --declaration --declarationDir build/types",
+      "tsc --declaration --declarationDir build/types",
     "prebuild": "npm run clean",
-    "build": "webpack --config config/webpack.config.js --progress",
+    "build": "yarn webpack --config config/webpack.config.js --progress",
     "postbuild": "npm run build:types",
-    "clean": "rimraf build",
+    "clean": "yarn rimraf build",
     "watch:lib": "webpack --config config/webpack.config.js --progress --watch",
     "debug": "nodemon --debug=9229 --inspect src/test.js",
     "test": "jest --no-cache",

@@ -35,22 +35,21 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: [
-          // {
-          //   loader: 'babel-loader'
-          // },
+          {
+            loader: 'babel-loader'
+          },
           {
             loader: 'ts-loader'
           }
         ]
-      },
-      {
-        test: /\.js?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader'
-      }
+      }//,
+      //{
+      //  test: /\.js?$/,
+      //  exclude: /(node_modules|bower_components)/,
+      //  loader: 'babel-loader'
+     // }
     ]
   },
-  devtool: 'source-map',
   resolve: {
     modules: [
       'node_modules'
