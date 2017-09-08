@@ -74,15 +74,20 @@ module.exports =
 
 "use strict";
 
-
 Object.defineProperty(exports, "__esModule", { value: true });
 const last = __webpack_require__(18);
 function parseHref(href) {
     const hash = href.split('#')[1];
     const url = href.split('#')[0];
-    const prefix = url.split('/').slice(0, -1).join('/');
+    const prefix = url
+        .split('/')
+        .slice(0, -1)
+        .join('/');
     const filename = last(url.split('/'));
-    const name = filename.split('.').slice(0, -1).join('.');
+    const name = filename
+        .split('.')
+        .slice(0, -1)
+        .join('.');
     let ext = last(filename.split('.'));
     if (filename.indexOf('.') === -1) {
         ext = '';
@@ -91,12 +96,12 @@ function parseHref(href) {
 }
 exports.default = parseHref;
 
+
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsdom_1 = __webpack_require__(11);
@@ -129,7 +134,8 @@ const recursivelyReadParent = (node, callback, final) => {
                 return _read(parent);
             }
             return newNode;
-        } else {
+        }
+        else {
             if (final) {
                 return final();
             }
@@ -169,7 +175,8 @@ const parseHTMLObject = (HTMLString, config = {}) => {
                     attrs[attr] = attrVal;
                 });
                 return { tag, type: 1, children, attrs };
-            } else {
+            }
+            else {
                 const text = node.textContent.trim();
                 if (!text) {
                     return null;
@@ -203,12 +210,12 @@ const parseHTMLObject = (HTMLString, config = {}) => {
 };
 exports.default = parseHTMLObject;
 
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const map = __webpack_require__(4);
@@ -230,9 +237,11 @@ const parseNestedObjectWrapper = (_rootObject, config) => {
     if (!_rootObject) {
         return [];
     }
-    const parseNestedObject = rootObject => {
+    const parseNestedObject = (rootObject) => {
         const makeArray = () => {
-            if (Array.isArray(rootObject) || isArrayLikeObject(rootObject) || isArrayLike(rootObject)) {
+            if (Array.isArray(rootObject) ||
+                isArrayLikeObject(rootObject) ||
+                isArrayLike(rootObject)) {
                 return rootObject;
             }
             return [rootObject];
@@ -247,7 +256,9 @@ const parseNestedObjectWrapper = (_rootObject, config) => {
                 const parsedChildren = parseNestedObject(object[childrenKey]);
                 // in parseHTML, if a tag is in unwrap list, like <span>aaa<span>bbb</span></span>
                 // the result needs to be flatten
-                const children = isEmpty(parsedChildren) ? undefined : flattenDeep(parsedChildren);
+                const children = isEmpty(parsedChildren)
+                    ? undefined
+                    : flattenDeep(parsedChildren);
                 if (parser) {
                     return parser(object, children);
                 }
@@ -269,6 +280,7 @@ const parseNestedObjectWrapper = (_rootObject, config) => {
 };
 exports.parseNestedObject = parseNestedObjectWrapper;
 
+
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
@@ -287,7 +299,6 @@ module.exports = require("lodash/map");
 
 "use strict";
 
-
 Object.defineProperty(exports, "__esModule", { value: true });
 const epubParser_1 = __webpack_require__(6);
 const parseLink_1 = __webpack_require__(0);
@@ -298,38 +309,18 @@ const utils_1 = __webpack_require__(2);
 exports.parseNestedObject = utils_1.parseNestedObject;
 exports.default = epubParser_1.default;
 
+
 /***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) {
-            try {
-                step(generator.next(value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function rejected(value) {
-            try {
-                step(generator["throw"](value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function step(result) {
-            result.done ? resolve(result.value) : new P(function (resolve) {
-                resolve(result.value);
-            }).then(fulfilled, rejected);
-        }
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -349,7 +340,8 @@ const xmlToJs = xml => {
         xmlParser.parseString(xml, (err, object) => {
             if (err) {
                 reject(err);
-            } else {
+            }
+            else {
                 resolve(object);
             }
         });
@@ -385,151 +377,127 @@ const parseMetadata = metadata => {
     };
     return meta;
 };
-
-let Epub = function () {
-    function Epub(buffer) {
-        _classCallCheck(this, Epub);
-
+class Epub {
+    constructor(buffer) {
         this._zip = new node_zip_1.default(buffer, {
             binary: true,
             base64: false,
             checkCRC32: true
         });
     }
-
-    _createClass(Epub, [{
-        key: "resolve",
-        value: function resolve(path) {
-            let _path;
-            if (path[0] === '/') {
-                // use absolute path, root is zip root
-                _path = path.substr(1);
-            } else {
-                _path = this._root + path;
+    resolve(path) {
+        let _path;
+        if (path[0] === '/') {
+            // use absolute path, root is zip root
+            _path = path.substr(1);
+        }
+        else {
+            _path = this._root + path;
+        }
+        const file = this._zip.file(decodeURI(_path));
+        if (file) {
+            return file;
+        }
+        else {
+            throw new Error(`${_path} not found!`);
+        }
+    }
+    _resolveXMLAsJsObject(path) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const xml = this.resolve(path).asText();
+            return xmlToJs(xml);
+        });
+    }
+    _getOpfPath() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const container = yield this._resolveXMLAsJsObject('/META-INF/container.xml');
+            const opfPath = container.container.rootfiles[0].rootfile[0]['$']['full-path'];
+            return opfPath;
+        });
+    }
+    _getManifest(content) {
+        return get(content, ['package', 'manifest', 0, 'item'], []).map(item => item.$);
+    }
+    _resolveIdFromLink(href) {
+        const { name: tarName } = parseLink_1.default(href);
+        const tarItem = find(this._manifest, item => {
+            const { name } = parseLink_1.default(item.href);
+            return name === tarName;
+        });
+        return get(tarItem, 'id');
+    }
+    _getSpine() {
+        return get(this._content, ['package', 'spine', 0, 'itemref'], []).map(item => {
+            return item.$.idref;
+        });
+    }
+    _genStructure(tocObj, resolveNodeId = false) {
+        const rootNavPoints = get(tocObj, ['ncx', 'navMap', '0', 'navPoint'], []);
+        const parseNavPoint = navPoint => {
+            // link to section
+            const path = get(navPoint, ['content', '0', '$', 'src'], '');
+            const name = get(navPoint, ['navLabel', '0', 'text', '0']);
+            const playOrder = get(navPoint, ['$', 'playOrder']);
+            const { hash: nodeId } = parseLink_1.default(path);
+            let children = navPoint.navPoint;
+            if (children) {
+                // tslint:disable-next-line:no-use-before-declare
+                children = parseNavPoints(children);
             }
-            const file = this._zip.file(decodeURI(_path));
-            if (file) {
-                return file;
-            } else {
-                throw new Error(`${_path} not found!`);
-            }
-        }
-    }, {
-        key: "_resolveXMLAsJsObject",
-        value: function _resolveXMLAsJsObject(path) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const xml = this.resolve(path).asText();
-                return xmlToJs(xml);
-            });
-        }
-    }, {
-        key: "_getOpfPath",
-        value: function _getOpfPath() {
-            return __awaiter(this, void 0, void 0, function* () {
-                const container = yield this._resolveXMLAsJsObject('/META-INF/container.xml');
-                const opfPath = container.container.rootfiles[0].rootfile[0]['$']['full-path'];
-                return opfPath;
-            });
-        }
-    }, {
-        key: "_getManifest",
-        value: function _getManifest(content) {
-            return get(content, ['package', 'manifest', 0, 'item'], []).map(item => item.$);
-        }
-    }, {
-        key: "_resolveIdFromLink",
-        value: function _resolveIdFromLink(href) {
-            const { name: tarName } = parseLink_1.default(href);
-            const tarItem = find(this._manifest, item => {
-                const { name } = parseLink_1.default(item.href);
-                return name === tarName;
-            });
-            return get(tarItem, 'id');
-        }
-    }, {
-        key: "_getSpine",
-        value: function _getSpine() {
-            return get(this._content, ['package', 'spine', 0, 'itemref'], []).map(item => {
-                return item.$.idref;
-            });
-        }
-    }, {
-        key: "_genStructure",
-        value: function _genStructure(tocObj, resolveNodeId = false) {
-            const rootNavPoints = get(tocObj, ['ncx', 'navMap', '0', 'navPoint'], []);
-            const parseNavPoint = navPoint => {
-                // link to section
-                const path = get(navPoint, ['content', '0', '$', 'src'], '');
-                const name = get(navPoint, ['navLabel', '0', 'text', '0']);
-                const playOrder = get(navPoint, ['$', 'playOrder']);
-                const { hash: nodeId } = parseLink_1.default(path);
-                let children = navPoint.navPoint;
-                if (children) {
-                    // tslint:disable-next-line:no-use-before-declare
-                    children = parseNavPoints(children);
-                }
-                const sectionId = this._resolveIdFromLink(path);
-                return {
-                    name,
-                    sectionId,
-                    nodeId,
-                    path,
-                    playOrder,
-                    children
-                };
+            const sectionId = this._resolveIdFromLink(path);
+            return {
+                name,
+                sectionId,
+                nodeId,
+                path,
+                playOrder,
+                children
             };
-            const parseNavPoints = navPoints => {
-                return navPoints.map(point => {
-                    return parseNavPoint(point);
-                });
-            };
-            return parseNavPoints(rootNavPoints);
-        }
-    }, {
-        key: "_resolveSectionsFromSpine",
-        value: function _resolveSectionsFromSpine(expand = false) {
-            // no chain
-            return map(union(this._spine), id => {
-                const path = find(this._manifest, { id }).href;
-                const html = this.resolve(path).asText();
-                return parseSection_1.default({
-                    id,
-                    htmlString: html,
-                    resourceResolver: this.resolve.bind(this),
-                    idResolver: this._resolveIdFromLink.bind(this),
-                    expand
-                });
+        };
+        const parseNavPoints = navPoints => {
+            return navPoints.map(point => {
+                return parseNavPoint(point);
             });
-        }
-    }, {
-        key: "parse",
-        value: function parse(expand = false) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const opfPath = yield this._getOpfPath();
-                this._root = determineRoot(opfPath);
-                const content = yield this._resolveXMLAsJsObject('/' + opfPath);
-                const manifest = this._getManifest(content);
-                const tocID = get(content, ['package', 'spine', 0, '$', 'toc'], '');
-                const tocPath = find(manifest, { id: tocID }).href;
-                const toc = yield this._resolveXMLAsJsObject(tocPath);
-                const metadata = get(content, ['package', 'metadata'], []);
-                this._manifest = manifest;
-                this._content = content;
-                this._opfPath = opfPath;
-                this._toc = toc;
-                this._spine = this._getSpine();
-                this._metadata = metadata;
-                this.info = parseMetadata(metadata);
-                this.sections = this._resolveSectionsFromSpine(expand);
-                this.structure = this._genStructure(toc);
-                return this;
+        };
+        return parseNavPoints(rootNavPoints);
+    }
+    _resolveSectionsFromSpine(expand = false) {
+        // no chain
+        return map(union(this._spine), id => {
+            const path = find(this._manifest, { id }).href;
+            const html = this.resolve(path).asText();
+            return parseSection_1.default({
+                id,
+                htmlString: html,
+                resourceResolver: this.resolve.bind(this),
+                idResolver: this._resolveIdFromLink.bind(this),
+                expand
             });
-        }
-    }]);
-
-    return Epub;
-}();
-
+        });
+    }
+    parse(expand = false) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const opfPath = yield this._getOpfPath();
+            this._root = determineRoot(opfPath);
+            const content = yield this._resolveXMLAsJsObject('/' + opfPath);
+            const manifest = this._getManifest(content);
+            const tocID = get(content, ['package', 'spine', 0, '$', 'toc'], '');
+            const tocPath = find(manifest, { id: tocID }).href;
+            const toc = yield this._resolveXMLAsJsObject(tocPath);
+            const metadata = get(content, ['package', 'metadata'], []);
+            this._manifest = manifest;
+            this._content = content;
+            this._opfPath = opfPath;
+            this._toc = toc;
+            this._spine = this._getSpine();
+            this._metadata = metadata;
+            this.info = parseMetadata(metadata);
+            this.sections = this._resolveSectionsFromSpine(expand);
+            this.structure = this._genStructure(toc);
+            return this;
+        });
+    }
+}
 exports.Epub = Epub;
 function parserWrapper(target, options = {}) {
     // seems 260 is the length limit of old windows standard
@@ -538,19 +506,20 @@ function parserWrapper(target, options = {}) {
     // but it can use options to define the target type
     const { type, expand } = options;
     let _target = target;
-    if (type === 'path' || typeof target === 'string' && fs_1.default.existsSync(target)) {
+    if (type === 'path' ||
+        (typeof target === 'string' && fs_1.default.existsSync(target))) {
         _target = fs_1.default.readFileSync(target, 'binary');
     }
     return new Epub(_target).parse(expand);
 }
 exports.default = parserWrapper;
 
+
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const parseLink_1 = __webpack_require__(0);
@@ -608,16 +577,12 @@ exports.img = {
     }
 };
 
+
 /***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __webpack_require__(21);
@@ -625,14 +590,11 @@ const to_markdown_1 = __webpack_require__(22);
 const parseLink_1 = __webpack_require__(0);
 const parseHTML_1 = __webpack_require__(1);
 const mdConverters = __webpack_require__(7);
-const isInternalUri = uri => {
+const isInternalUri = (uri) => {
     return uri.indexOf('http://') === -1 && uri.indexOf('https://') === -1;
 };
-
-let Section = function () {
-    function Section({ id, htmlString, resourceResolver, idResolver, expand }) {
-        _classCallCheck(this, Section);
-
+class Section {
+    constructor({ id, htmlString, resourceResolver, idResolver, expand }) {
         this.id = id;
         this.htmlString = htmlString;
         this._resourceResolver = resourceResolver;
@@ -641,52 +603,44 @@ let Section = function () {
             this.htmlObjects = this.toHtmlObjects();
         }
     }
-
-    _createClass(Section, [{
-        key: "toMarkdown",
-        value: function toMarkdown() {
-            return to_markdown_1.default(this.htmlString, {
-                converters: [mdConverters.h, mdConverters.span, mdConverters.div, mdConverters.img, mdConverters.a]
-            });
-        }
-    }, {
-        key: "toHtmlObjects",
-        value: function toHtmlObjects() {
-            return parseHTML_1.default(this.htmlString, {
-                resolveHref: href => {
-                    if (isInternalUri(href)) {
-                        const { hash } = parseLink_1.default(href);
-                        // todo: what if a link only contains hash part?
-                        const sectionId = this._idResolver(href);
-                        if (hash) {
-                            return `#${sectionId},${hash}`;
-                        }
-                        return `#${sectionId}`;
+    toMarkdown() {
+        return to_markdown_1.default(this.htmlString, {
+            converters: [mdConverters.h, mdConverters.span, mdConverters.div, mdConverters.img, mdConverters.a]
+        });
+    }
+    toHtmlObjects() {
+        return parseHTML_1.default(this.htmlString, {
+            resolveHref: (href) => {
+                if (isInternalUri(href)) {
+                    const { hash } = parseLink_1.default(href);
+                    // todo: what if a link only contains hash part?
+                    const sectionId = this._idResolver(href);
+                    if (hash) {
+                        return `#${sectionId},${hash}`;
                     }
-                    return href;
-                },
-                resolveSrc: src => {
-                    if (isInternalUri(src)) {
-                        // todo: may have bugs
-                        const absolutePath = path_1.default.resolve('/', src).substr(1);
-                        const buffer = this._resourceResolver(absolutePath).asNodeBuffer();
-                        const base64 = buffer.toString('base64');
-                        return `data:image/png;base64,${base64}`;
-                    }
-                    return src;
+                    return `#${sectionId}`;
                 }
-            });
-        }
-    }]);
-
-    return Section;
-}();
-
+                return href;
+            },
+            resolveSrc: (src) => {
+                if (isInternalUri(src)) {
+                    // todo: may have bugs
+                    const absolutePath = path_1.default.resolve('/', src).substr(1);
+                    const buffer = this._resourceResolver(absolutePath).asNodeBuffer();
+                    const base64 = buffer.toString('base64');
+                    return `data:image/png;base64,${base64}`;
+                }
+                return src;
+            }
+        });
+    }
+}
 exports.Section = Section;
-const parseSection = config => {
+const parseSection = (config) => {
     return new Section(config);
 };
 exports.default = parseSection;
+
 
 /***/ }),
 /* 9 */

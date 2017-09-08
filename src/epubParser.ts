@@ -1,5 +1,5 @@
 import fs from 'fs'
-import xml2js from 'xml2js'
+import xml2js = require('xml2js')
 import get = require('lodash/get')
 import find = require('lodash/find')
 import map = require('lodash/map')

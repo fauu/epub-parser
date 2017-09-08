@@ -2,7 +2,7 @@
   "compileOnSave": true,
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "target": "es2015",
+    "target": "es6",
     "jsx": "react",
     "module": "commonjs",
     "experimentalDecorators": true,

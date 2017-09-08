@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = require("fs");
-const xml2js_1 = require("xml2js");
+const xml2js = require("xml2js");
 const get = require("lodash/get");
 const find = require("lodash/find");
 const map = require("lodash/map");
@@ -17,7 +17,7 @@ const union = require("lodash/union");
 const node_zip_1 = require("node-zip");
 const parseLink_1 = require("./parseLink");
 const parseSection_1 = require("./parseSection");
-const xmlParser = new xml2js_1.default.Parser();
+const xmlParser = new xml2js.Parser();
 const xmlToJs = xml => {
     return new Promise((resolve, reject) => {
         xmlParser.parseString(xml, (err, object) => {
