@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = require("fs");
-const xml2js = require("xml2js");
+const xml2js = require('xml2js');
 const get = require("lodash/get");
 const find = require("lodash/find");
 const map = require("lodash/map");
 const union = require("lodash/union");
-const node_zip_1 = require("node-zip");
+const nodeZip = require('node-zip');
 const parseLink_1 = require("./parseLink");
 const parseSection_1 = require("./parseSection");
 const xmlParser = new xml2js.Parser();
@@ -62,7 +62,7 @@ const parseMetadata = metadata => {
 };
 class Epub {
     constructor(buffer) {
-        this._zip = new node_zip_1.default(buffer, {
+        this._zip = new nodeZip(buffer, {
             binary: true,
             base64: false,
             checkCRC32: true

@@ -1,10 +1,10 @@
 import fs from 'fs'
-import xml2js = require('xml2js')
+const xml2js = require('xml2js')
 import get = require('lodash/get')
 import find = require('lodash/find')
 import map = require('lodash/map')
 import union = require('lodash/union')
-import nodeZip from 'node-zip'
+const nodeZip = require('node-zip')
 import parseLink from './parseLink'
 import parseSection, { Section } from './parseSection'
 

@@ -1,10 +1,10 @@
 import path from 'path'
-import toMarkdown from 'to-markdown'
+const _toMarkdown = require('to-markdown')
 import parseLink from './parseLink'
 import parseHTML from './parseHTML'
 import * as mdConverters from './mdConverters'
 
-const isInternalUri = (uri) => {
+const isInternalUri = uri => {
   return uri.indexOf('http://') === -1 && uri.indexOf('https://') === -1
 }
 
@@ -23,7 +23,13 @@ export class Section {
   private _resourceResolver?: (path: string) => any
   private _idResolver?: (link: string) => string
 
-  constructor({ id, htmlString, resourceResolver, idResolver, expand }: ParseSectionConfig) {
+  constructor({
+    id,
+    htmlString,
+    resourceResolver,
+    idResolver,
+    expand
+  }: ParseSectionConfig) {
     this.id = id
     this.htmlString = htmlString
     this._resourceResolver = resourceResolver
@@ -34,14 +40,20 @@ export class Section {
   }
 
   toMarkdown?() {
-    return toMarkdown(this.htmlString, {
-      converters: [mdConverters.h, mdConverters.span, mdConverters.div, mdConverters.img, mdConverters.a]
+    return _toMarkdown(this.htmlString, {
+      converters: [
+        mdConverters.h,
+        mdConverters.span,
+        mdConverters.div,
+        mdConverters.img,
+        mdConverters.a
+      ]
     })
   }
 
   toHtmlObjects?() {
     return parseHTML(this.htmlString, {
-      resolveHref: (href) => {
+      resolveHref: href => {
         if (isInternalUri(href)) {
           const { hash } = parseLink(href)
           // todo: what if a link only contains hash part?
@@ -53,7 +65,7 @@ export class Section {
         }
         return href
       },
-      resolveSrc: (src) => {
+      resolveSrc: src => {
         if (isInternalUri(src)) {
           // todo: may have bugs
           const absolutePath = path.resolve('/', src).substr(1)

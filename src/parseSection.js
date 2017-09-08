@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = require("path");
-const to_markdown_1 = require("to-markdown");
+const _toMarkdown = require('to-markdown');
 const parseLink_1 = require("./parseLink");
 const parseHTML_1 = require("./parseHTML");
 const mdConverters = require("./mdConverters");
-const isInternalUri = (uri) => {
+const isInternalUri = uri => {
     return uri.indexOf('http://') === -1 && uri.indexOf('https://') === -1;
 };
 class Section {
@@ -19,13 +19,19 @@ class Section {
         }
     }
     toMarkdown() {
-        return to_markdown_1.default(this.htmlString, {
-            converters: [mdConverters.h, mdConverters.span, mdConverters.div, mdConverters.img, mdConverters.a]
+        return _toMarkdown(this.htmlString, {
+            converters: [
+                mdConverters.h,
+                mdConverters.span,
+                mdConverters.div,
+                mdConverters.img,
+                mdConverters.a
+            ]
         });
     }
     toHtmlObjects() {
         return parseHTML_1.default(this.htmlString, {
-            resolveHref: (href) => {
+            resolveHref: href => {
                 if (isInternalUri(href)) {
                     const { hash } = parseLink_1.default(href);
                     // todo: what if a link only contains hash part?
@@ -37,7 +43,7 @@ class Section {
                 }
                 return href;
             },
-            resolveSrc: (src) => {
+            resolveSrc: src => {
                 if (isInternalUri(src)) {
                     // todo: may have bugs
                     const absolutePath = path_1.default.resolve('/', src).substr(1);
