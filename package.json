@@ -5,7 +5,8 @@
   "main": "build/lib/epubParser.js",
   "types": "build/types/index.d.ts",
   "scripts": {
-    "build:types": "tsc --outDir build/js --declaration --declarationDir build/types",
+    "build:types":
+      "tsc --outDir build/js --declaration --declarationDir build/types",
     "prebuild": "npm run clean",
     "build": "webpack --config config/webpack.config.js --progress",
     "postbuild": "npm run build:types",
@@ -19,14 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/gaoxiaoliangz/epub-parser.git"
   },
-  "keywords": [
-    "epub-parser",
-    "parser",
-    "epub",
-    "easy",
-    "book",
-    "file"
-  ],
+  "keywords": ["epub-parser", "parser", "epub", "easy", "book", "file"],
   "author": "gaoxiaoliangz",
   "license": "ISC",
   "bugs": {
@@ -38,7 +32,6 @@
     "lodash": "^4.17.2",
     "node-zip": "^1.1.1",
     "to-markdown": "^3.0.3",
-    "typescript": "2.3.4",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
@@ -78,6 +71,7 @@
     "promise": "^7.1.1",
     "rimraf": "^2.5.1",
     "source-map-support": "^0.4.15",
+    "typescript": "2.3.4",
     "ts-jest": "^20.0.4",
     "ts-loader": "^2.3.0",
     "ts-node": "^3.0.4",
@@ -90,23 +84,13 @@
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
+    "setupFiles": ["<rootDir>/config/polyfills.js"],
     "testPathIgnorePatterns": [
       "<rootDir>[/\\\\](build|docs|node_modules|scripts)[/\\\\]"
     ],
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}"
-    ],
+    "collectCoverageFrom": ["src/**/*.{ts,tsx}"],
     "testRegex": "(/__test__/.*|\\.(test|spec))\\.(ts|tsx)$",
-    "modulePaths": [
-      "src"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ]
+    "modulePaths": ["src"],
+    "moduleFileExtensions": ["ts", "tsx", "js"]
   }
 }
