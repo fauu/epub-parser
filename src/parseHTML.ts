@@ -1,5 +1,5 @@
 import jsdom from 'jsdom'
-import _ from 'lodash'
+import isEmpty = require('lodash/isEmpty')
 import { parseNestedObject } from './utils'
 
 const debug = require('debug')('readr:html')
@@ -9,24 +9,22 @@ const UNWRAP_TAGS = ['body', 'html', 'div', 'span']
 const PICKED_ATTRS = ['href', 'src', 'id']
 
 const parseRawHTML = HTMLString => {
-  return jsdom
-    .jsdom(HTMLString, {
-      features: {
-        FetchExternalResources: [],
-        ProcessExternalResources: false
-      }
-    })
-    .documentElement
+  return jsdom.jsdom(HTMLString, {
+    features: {
+      FetchExternalResources: [],
+      ProcessExternalResources: false
+    }
+  }).documentElement
 }
 
 /**
  * recursivelyReadParent
- * @param node 
+ * @param node
  * @param callback invoke every time a parent node is read, return truthy value to stop the reading process
  * @param final callback when reaching the root
  */
 const recursivelyReadParent = (node, callback, final?) => {
-  const _read = (_node) => {
+  const _read = _node => {
     const parent = _node.parentNode
     if (parent) {
       const newNode = callback(parent)
@@ -99,22 +97,26 @@ const parseHTMLObject = (HTMLString, config: ParseHTMLObjectConfig = {}) => {
 
         // find the cloest parent which is not in UNWRAP_TAGS
         // if failed then wrap with p tag
-        return recursivelyReadParent(node, parent => {
-          const tag = parent.tagName && parent.tagName.toLowerCase()
-          if (!tag || (UNWRAP_TAGS.indexOf(tag) !== -1)) {
-            return false
+        return recursivelyReadParent(
+          node,
+          parent => {
+            const tag = parent.tagName && parent.tagName.toLowerCase()
+            if (!tag || UNWRAP_TAGS.indexOf(tag) !== -1) {
+              return false
+            }
+            return makeTextObject()
+          },
+          () => {
+            return {
+              tag: 'p',
+              children: [makeTextObject()]
+            }
           }
-          return makeTextObject()
-        }, () => {
-          return {
-            tag: 'p',
-            children: [makeTextObject()]
-          }
-        })
+        )
       }
     },
     postFilter(node) {
-      return !_.isEmpty(node)
+      return !isEmpty(node)
     }
   }) as HtmlNodeObject[]
 }

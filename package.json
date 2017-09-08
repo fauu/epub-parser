@@ -5,8 +5,7 @@
   "main": "build/lib/epubParser.js",
   "types": "build/types/index.d.ts",
   "scripts": {
-    "build:types":
-      "tsc --declaration --declarationDir build/types",
+    "build:types": "tsc --declaration --declarationDir build/types",
     "prebuild": "npm run clean",
     "build": "yarn webpack --config config/webpack.config.js --progress",
     "postbuild": "npm run build:types",
@@ -31,7 +30,17 @@
     "jsdom": "9.12.0",
     "node-zip": "^1.1.1",
     "to-markdown": "^3.0.3",
-    "xml2js": "^0.4.17"
+    "xml2js": "^0.4.17",
+    "lodash.flattendeep": "^4.4.0",
+    "lodash.find": "^4.6.0",
+    "lodash.get": "^4.4.2",
+    "lodash.isarraylike": "^4.2.0",
+    "lodash.isarraylikeobject": "^4.2.0",
+    "lodash.isempty": "^4.4.0",
+    "lodash.keys": "^4.2.0",
+    "lodash.last": "^3.0.0",
+    "lodash.map": "^4.6.0",
+    "lodash.union": "^4.6.0"
   },
   "devDependencies": {
     "@types/expect.js": "^0.3.28",
@@ -46,7 +55,6 @@
     "babel-jest": "^20.0.3",
     "babel-loader": "^7.0.0",
     "babel-plugin-istanbul": "^2.0.3",
-    "babel-plugin-lodash": "^3.1.2",
     "babel-plugin-syntax-async-functions": "^6.5.0",
     "babel-plugin-transform-es2015-classes": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
@@ -65,8 +73,6 @@
     "expect.js": "^0.3.1",
     "express": "^4.15.3",
     "jest": "^20.0.4",
-    "lodash": "^4.17.2",
-    "lodash-webpack-plugin": "^0.10.3",
     "mocha": "^3.4.2",
     "promise": "^7.1.1",
     "rimraf": "^2.5.1",

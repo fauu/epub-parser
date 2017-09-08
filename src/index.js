@@ -1,6 +1,10 @@
-import parser from './epubParser';
-import parseLink from './parseLink';
-import parseHTML from './parseHTML';
-import { parseNestedObject } from './utils';
-export { parseLink, parseHTML, parseNestedObject };
-export default parser;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const epubParser_1 = require("./epubParser");
+const parseLink_1 = require("./parseLink");
+exports.parseLink = parseLink_1.default;
+const parseHTML_1 = require("./parseHTML");
+exports.parseHTML = parseHTML_1.default;
+const utils_1 = require("./utils");
+exports.parseNestedObject = utils_1.parseNestedObject;
+exports.default = epubParser_1.default;

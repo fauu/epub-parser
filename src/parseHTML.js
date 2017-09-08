@@ -1,19 +1,19 @@
-import jsdom from 'jsdom';
-import _ from 'lodash';
-import { parseNestedObject } from './utils';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const jsdom_1 = require("jsdom");
+const isEmpty = require("lodash/isEmpty");
+const utils_1 = require("./utils");
 const debug = require('debug')('readr:html');
 const OMITTED_TAGS = ['head', 'input', 'textarea', 'script', 'style', 'svg'];
 const UNWRAP_TAGS = ['body', 'html', 'div', 'span'];
 const PICKED_ATTRS = ['href', 'src', 'id'];
 const parseRawHTML = HTMLString => {
-    return jsdom
-        .jsdom(HTMLString, {
+    return jsdom_1.default.jsdom(HTMLString, {
         features: {
             FetchExternalResources: [],
             ProcessExternalResources: false
         }
-    })
-        .documentElement;
+    }).documentElement;
 };
 /**
  * recursivelyReadParent
@@ -22,7 +22,7 @@ const parseRawHTML = HTMLString => {
  * @param final callback when reaching the root
  */
 const recursivelyReadParent = (node, callback, final) => {
-    const _read = (_node) => {
+    const _read = _node => {
         const parent = _node.parentNode;
         if (parent) {
             const newNode = callback(parent);
@@ -45,7 +45,7 @@ const parseHTMLObject = (HTMLString, config = {}) => {
     const rootNode = parseRawHTML(HTMLString);
     const { resolveHref, resolveSrc } = config;
     // initial parse
-    return parseNestedObject(rootNode, {
+    return utils_1.parseNestedObject(rootNode, {
         childrenKey: 'childNodes',
         preFilter(node) {
             return node.nodeType === 1 || node.nodeType === 3;
@@ -87,7 +87,7 @@ const parseHTMLObject = (HTMLString, config = {}) => {
                 // if failed then wrap with p tag
                 return recursivelyReadParent(node, parent => {
                     const tag = parent.tagName && parent.tagName.toLowerCase();
-                    if (!tag || (UNWRAP_TAGS.indexOf(tag) !== -1)) {
+                    if (!tag || UNWRAP_TAGS.indexOf(tag) !== -1) {
                         return false;
                     }
                     return makeTextObject();
@@ -100,8 +100,8 @@ const parseHTMLObject = (HTMLString, config = {}) => {
             }
         },
         postFilter(node) {
-            return !_.isEmpty(node);
+            return !isEmpty(node);
         }
     });
 };
-export default parseHTMLObject;
+exports.default = parseHTMLObject;

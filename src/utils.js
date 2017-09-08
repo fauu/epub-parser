@@ -1,4 +1,11 @@
-import _ from 'lodash';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const map = require("lodash/map");
+const isEmpty = require("lodash/isEmpty");
+const filter = require("lodash/filter");
+const isArrayLike = require("lodash/isArrayLike");
+const isArrayLikeObject = require("lodash/isArrayLikeObject");
+const flattenDeep = require("lodash/flattenDeep");
 /**
  * parseNestedObject
  * a note about config.parser
@@ -14,7 +21,9 @@ const parseNestedObjectWrapper = (_rootObject, config) => {
     }
     const parseNestedObject = (rootObject) => {
         const makeArray = () => {
-            if (Array.isArray(rootObject) || _.isArrayLikeObject(rootObject) || _.isArrayLike(rootObject)) {
+            if (Array.isArray(rootObject) ||
+                isArrayLikeObject(rootObject) ||
+                isArrayLike(rootObject)) {
                 return rootObject;
             }
             return [rootObject];
@@ -22,14 +31,16 @@ const parseNestedObjectWrapper = (_rootObject, config) => {
         const rootArray = makeArray();
         let result = rootArray;
         if (preFilter) {
-            result = _.filter(result, preFilter);
+            result = filter(result, preFilter);
         }
-        result = _.map(result, (object, index) => {
+        result = map(result, (object, index) => {
             if (object[childrenKey]) {
                 const parsedChildren = parseNestedObject(object[childrenKey]);
                 // in parseHTML, if a tag is in unwrap list, like <span>aaa<span>bbb</span></span>
                 // the result needs to be flatten
-                const children = _.isEmpty(parsedChildren) ? undefined : _.flattenDeep(parsedChildren);
+                const children = isEmpty(parsedChildren)
+                    ? undefined
+                    : flattenDeep(parsedChildren);
                 if (parser) {
                     return parser(object, children);
                 }
@@ -43,10 +54,10 @@ const parseNestedObjectWrapper = (_rootObject, config) => {
             return object;
         });
         if (postFilter) {
-            result = _.filter(result, postFilter);
+            result = filter(result, postFilter);
         }
         return result;
     };
-    return _.flattenDeep(parseNestedObject(_rootObject));
+    return flattenDeep(parseNestedObject(_rootObject));
 };
-export const parseNestedObject = parseNestedObjectWrapper;
+exports.parseNestedObject = parseNestedObjectWrapper;

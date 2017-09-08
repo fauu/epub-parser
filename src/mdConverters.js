@@ -1,7 +1,9 @@
-import parseLink from './parseLink';
-export const resolveInlineNavHref = href => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const parseLink_1 = require("./parseLink");
+exports.resolveInlineNavHref = href => {
     if (href && href.indexOf('http://') === -1) {
-        const parsed = parseLink(href);
+        const parsed = parseLink_1.default(href);
         if (parsed.hash) {
             return `#${parsed.name}$${parsed.hash}`;
         }
@@ -9,7 +11,7 @@ export const resolveInlineNavHref = href => {
     }
     return href;
 };
-export const h = {
+exports.h = {
     filter: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
     replacement: function (innerHTML, node) {
         let hLevel = node.tagName.charAt(1);
@@ -27,26 +29,26 @@ export const h = {
         return `\n<${hTag} id="${id}">${innerHTML.trim().split('\n').join(' ')}</${hTag}>\n\n`;
     }
 };
-export const span = {
+exports.span = {
     filter: ['span'],
     replacement: function (innerHTML, node) {
         return innerHTML;
     }
 };
-export const a = {
+exports.a = {
     filter: ['a'],
     replacement: function (innerHTML, node) {
         const href = node.getAttribute('href');
-        return `\n[${innerHTML}](${resolveInlineNavHref(href)})\n\n`;
+        return `\n[${innerHTML}](${exports.resolveInlineNavHref(href)})\n\n`;
     }
 };
-export const div = {
+exports.div = {
     filter: ['div'],
     replacement: function (innerHTML, node) {
         return `\n${innerHTML}\n\n`;
     }
 };
-export const img = {
+exports.img = {
     filter: ['img'],
     replacement: function (innerHTML, node) {
         return `\n[图]\n\n`;

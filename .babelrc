@@ -1,19 +1,11 @@
 {
   "env": {
     "development": {
-      "plugins": [
-        "babel-plugin-transform-es2015-classes"
-      ]
+      "plugins": ["babel-plugin-transform-es2015-classes"]
     },
     "production": {
-      "presets": [
-        "es2015"
-      ],
-      "plugins": [
-        "transform-runtime",
-        "lodash",
-        "transform-es2015-modules-commonjs"
-      ]
+      "presets": ["es2015"],
+      "plugins": ["transform-runtime", "transform-es2015-modules-commonjs"]
     }
   }
 }

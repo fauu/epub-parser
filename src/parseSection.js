@@ -1,12 +1,14 @@
-import path from 'path';
-import toMarkdown from 'to-markdown';
-import parseLink from './parseLink';
-import parseHTML from './parseHTML';
-import * as mdConverters from './mdConverters';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const path_1 = require("path");
+const to_markdown_1 = require("to-markdown");
+const parseLink_1 = require("./parseLink");
+const parseHTML_1 = require("./parseHTML");
+const mdConverters = require("./mdConverters");
 const isInternalUri = (uri) => {
     return uri.indexOf('http://') === -1 && uri.indexOf('https://') === -1;
 };
-export class Section {
+class Section {
     constructor({ id, htmlString, resourceResolver, idResolver, expand }) {
         this.id = id;
         this.htmlString = htmlString;
@@ -17,15 +19,15 @@ export class Section {
         }
     }
     toMarkdown() {
-        return toMarkdown(this.htmlString, {
+        return to_markdown_1.default(this.htmlString, {
             converters: [mdConverters.h, mdConverters.span, mdConverters.div, mdConverters.img, mdConverters.a]
         });
     }
     toHtmlObjects() {
-        return parseHTML(this.htmlString, {
+        return parseHTML_1.default(this.htmlString, {
             resolveHref: (href) => {
                 if (isInternalUri(href)) {
-                    const { hash } = parseLink(href);
+                    const { hash } = parseLink_1.default(href);
                     // todo: what if a link only contains hash part?
                     const sectionId = this._idResolver(href);
                     if (hash) {
@@ -38,7 +40,7 @@ export class Section {
             resolveSrc: (src) => {
                 if (isInternalUri(src)) {
                     // todo: may have bugs
-                    const absolutePath = path.resolve('/', src).substr(1);
+                    const absolutePath = path_1.default.resolve('/', src).substr(1);
                     const buffer = this._resourceResolver(absolutePath).asNodeBuffer();
                     const base64 = buffer.toString('base64');
                     return `data:image/png;base64,${base64}`;
@@ -48,7 +50,8 @@ export class Section {
         });
     }
 }
+exports.Section = Section;
 const parseSection = (config) => {
     return new Section(config);
 };
-export default parseSection;
+exports.default = parseSection;
